@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = ShoppingCart::VERSION
   s.authors     = ["Kirill Oleynik"]
   s.email       = ["kirill.olejnik@gmail.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of ShoppingCart."
-  s.description = "TODO: Description of ShoppingCart."
+  s.homepage    = "https://github.com/kirill-oleynik/ShoppingCart"
+  s.summary     = "RubyGarage hometask"
+  s.description = "Cart & checkout engine"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
