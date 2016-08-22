@@ -1,0 +1,36 @@
+= form_for order do |f|
+  %table.table#current_order
+    %thead
+      %tr
+        %th.lead.text-center{colspan:2}= t('index.book')
+        %th.lead.text-center= t('index.quantity')
+        %th.lead.text-center= t('index.price')
+        %th.lead.text-center= t('index.total')
+    %tbody.text-center
+      = f.fields_for :order_items do |oi|
+        %tr
+          %td{width:"15%"}= image_tag oi.object.book.cover.small
+          %td.text-left{width:'55%'}
+            %h4= link_to oi.object.book.title, oi.object.book
+            %p= oi.object.book.preview
+          %td{width:'10%'}= oi.number_field :quantity, class: 'form-control'
+          %td{width:'10%'}= number_to_currency oi.object.book.price
+          %td{width:'10%'}= delete_item_link oi.object.id
+      %tr.lead
+        %td{colspan:3}
+        %td.text-right
+          %p= t('cart.discount') if order.coupon
+          %p= t('cart.total')
+        %td
+          %p= order.discount if order.coupon
+          %p= order.total_in_currency
+      %tr
+        %td.text-center= empty_cart_link order
+        %td.text-left= continue_shopping_link
+        %td
+          = f.fields_for :coupon do |c|
+            = c.text_field :code, class: 'form-control',
+                           placeholder: (order.coupon ? order.coupon.code : t('coupon_code')),
+                           disabled: (true if order.coupon)
+        %td.text-center= f.submit t('orders.edit.update'), class: 'btn btn-success'
+        %td.text-center= link_to_checkout

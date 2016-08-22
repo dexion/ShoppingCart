@@ -1,0 +1,31 @@
+en:
+  # states:
+  #   in_progress: "In progress"
+  #   processing: "Processing"
+  #   in_delivery: "In delivery"
+  #   delivered: "Delivered"
+  cart:
+    page_title: "Cart"
+    empty_cart: "Nothing added to your order."
+    # total: "Order total:"
+    # back_to_shop: "Back to Shop"
+    # deleted: "Your order deleted successfuly"
+    # delete_error: "Something went wrong and your order was not deleted. Please, try again."
+  # index:
+  #   orders_title: "Your orders"
+  #   book: "Book"
+  #   price: "Price"
+  #   quantity: "QTY"
+  #   total: "Total"
+  #   to_cart: "Go to cart"
+  #   subtotal: "Subtotal:"
+  #   number: "Number"
+  #   completed_at: "Completed at"
+  #   total: "Total"
+  #   view: "View order"
+  #   no_orders: "You still have not ordered anything"
+  #   back_to_shop: "Back to Shop"
+  # show:
+  #   title: "Order information"
+  #   order_name_html: "Order %{num} <small>%{state}</small>"
+  #   back_to_orders: "Back to Orders"
