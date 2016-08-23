@@ -14,7 +14,7 @@ module ShoppingCart
     # end
 
     def edit
-      @order = ShoppingCart::Order.where(user_id: current_user.id).in_progress.first
+      @order = Order.where(user_id: current_user.id).in_progress.first
     end
 
     # def update
@@ -30,12 +30,12 @@ module ShoppingCart
     #   redirect_to cart_path
     # end
     #
-    # def create
-    #   CreateOrder.call(params) do
-    #     on(:ok)       { redirect_to cart_path }
-    #     on(:invalid)  { add_book_failed }
-    #   end
-    # end
+    def create
+      CreateOrder.call(params) do
+        on(:ok)       { redirect_to root_path }
+        on(:invalid)  { redirect_to root_path, error: 'error without I18n' }
+      end
+    end
 
     # private
 

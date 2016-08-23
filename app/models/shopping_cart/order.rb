@@ -48,14 +48,14 @@ module ShoppingCart
 
   #   scope :with_books, -> { includes(order_items: :book) }
   #
-  #   def add_item(book_id, quantity = 1)
-  #     item = order_items.find_by(book_id: book_id)
-  #     if item
-  #       item.update_amount(quantity)
-  #     else
-  #       order_items.create(quantity: quantity, book_id: book_id)
-  #     end
-  #   end
+    def add_item(id, type, quantity = 1)
+      item = order_items.where("productable_id = ? AND productable_type = ?", id, type).first
+      if item
+        item.update_amount(quantity)
+      else
+        order_items.create(quantity: quantity, productable_id: id, productable_type: type)
+      end
+    end
   #
   #   def update_total
   #     return if errors.any?

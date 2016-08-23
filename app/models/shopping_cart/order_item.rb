@@ -12,10 +12,10 @@ module ShoppingCart
     delegate :destroy_if_orphant, to: :order
     after_destroy :destroy_if_orphant
 
-    # def update_amount amount
-    #   summ = quantity + amount
-    #   self.update(quantity: summ)
-    # end
+    def update_amount additional_value
+      summ = quantity + additional_value
+      self.update(quantity: summ)
+    end
 
     def item_total
       quantity * productable.price
