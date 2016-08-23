@@ -14,7 +14,6 @@ module ShoppingCart
     # end
 
     def edit
-      # @order = current_customer.orders.in_progress.decorate.first
       @order = ShoppingCart::Order.where(user_id: current_user.id).in_progress.first
     end
 

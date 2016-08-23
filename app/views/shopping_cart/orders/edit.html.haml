@@ -1,6 +1,6 @@
 .raw
   .col-md-12
-    %h1.page-header= I18n.t('cart.page_title')
+    %h1.page-header= t('cart.page_title')
     .well
       - if @order
         = render partial: 'form', locals: {order: @order}

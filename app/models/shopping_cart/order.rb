@@ -2,8 +2,8 @@ require 'aasm'
 
 module ShoppingCart
   class Order < ApplicationRecord
-    # has_many   :order_items, dependent: :destroy
-    # belongs_to :customer
+    has_many   :order_items, dependent: :destroy
+    belongs_to :user, class_name: 'User'
     # belongs_to :credit_card
     # belongs_to :delivery
     # has_one :coupon, dependent: :destroy
@@ -63,11 +63,11 @@ module ShoppingCart
   #     new_total -= (new_total * coupon.discount / 100) if coupon
   #     self.total = new_total
   #   end
-  #
-  #   def destroy_if_orphant
-  #     self.destroy if order_items.count.zero?
-  #   end
-  #
+
+    def destroy_if_orphant
+      self.destroy if order_items.count.zero?
+    end
+
   #   def has_all_data?
   #     order_billing && order_shipping && credit_card && delivery
   #   end
