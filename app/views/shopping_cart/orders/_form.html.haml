@@ -5,17 +5,17 @@
         %th.lead.text-center= t('cart.product')
         %th.lead.text-center= t('cart.quantity')
         %th.lead.text-center= t('cart.price')
-        %th.lead.text-center= t('cart.total')
+        %th.lead.text-center{colspan:2}= t('cart.total')
     %tbody.text-center
       - order.order_items.each do |order_item|
         = f.fields_for 'order_items[]', order_item do |f|
           %tr
-            %td.text-left{width:'55%'}
+            %td.text-left{width:'60%'}
               %h4= f.object.productable.title
             %td{width:'10%'}= f.number_field :quantity, class: 'form-control'
             %td{width:'10%'}= number_to_currency f.object.productable.price
             %td{width:'10%'}= number_to_currency f.object.item_total
-            -# %td{width:'10%'}= delete_item_link f.object.id
+            %td{width:'10%'}= delete_item_link f.object.id
       -# %tr.lead
       -#   %td{colspan:3}
       -#   %td.text-right

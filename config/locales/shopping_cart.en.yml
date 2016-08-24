@@ -15,6 +15,8 @@ en:
     price: "Price"
     quantity: "QTY"
     total: "Total"
+    delete_item: 'Delete'
+    item_deleted: 'Item deleted'
   # index:
   #   orders_title: "Your orders"
   #   to_cart: "Go to cart"
