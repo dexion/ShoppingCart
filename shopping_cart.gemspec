@@ -21,4 +21,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'aasm'
   s.add_dependency 'haml'
   s.add_dependency 'rectify'
+  s.add_dependency 'drape'
 end
