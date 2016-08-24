@@ -6,7 +6,7 @@ module ShoppingCart
     belongs_to :user, class_name: 'User'
     # belongs_to :credit_card
     # belongs_to :delivery
-    # has_one :coupon, dependent: :destroy
+    has_one :coupon, dependent: :destroy
     # has_one :order_shipping,
     #         -> { where addressable_type: 'order_shipping' },
     #         class_name: Address, foreign_key: :addressable_id,
@@ -16,9 +16,9 @@ module ShoppingCart
     #         class_name: Address, foreign_key: :addressable_id,
     #         dependent: :destroy
 
-    # accepts_nested_attributes_for :order_items, allow_destroy: true
-    #
-    # after_validation :update_total
+    accepts_nested_attributes_for :order_items, allow_destroy: true
+
+    after_validation :update_total
 
     include AASM
     # attr_accessor :active_admin_requested_event
@@ -56,13 +56,13 @@ module ShoppingCart
         order_items.create(quantity: quantity, productable_id: id, productable_type: type)
       end
     end
-  #
-  #   def update_total
-  #     return if errors.any?
-  #     new_total = order_items.map(&:item_total).sum
-  #     new_total -= (new_total * coupon.discount / 100) if coupon
-  #     self.total = new_total
-  #   end
+
+    def update_total
+      return if errors.any?
+      new_total = order_items.map(&:item_total).sum
+      new_total -= (new_total * coupon.discount / 100) if coupon
+      self.total = new_total
+    end
 
     def destroy_if_orphant
       self.destroy if order_items.count.zero?

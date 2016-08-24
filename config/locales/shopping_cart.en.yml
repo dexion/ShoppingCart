@@ -4,6 +4,9 @@ en:
   #   processing: "Processing"
   #   in_delivery: "In delivery"
   #   delivered: "Delivered"
+  flash:
+    updated: "%{obj} updated."
+    not_updated: "Something went wrong & %{obj} was not updated."
   cart:
     page_title: "Cart"
     empty_cart: "Nothing added to your order."
@@ -16,7 +19,11 @@ en:
     quantity: "QTY"
     total: "Total"
     delete_item: 'Delete'
+    delete_order: 'Empty cart'
     item_deleted: 'Item deleted'
+    discount: 'Discount'
+    update_order: 'Update'
+    coupon_code: 'Coupon'
   # index:
   #   orders_title: "Your orders"
   #   to_cart: "Go to cart"

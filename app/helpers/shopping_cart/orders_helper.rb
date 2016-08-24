@@ -3,37 +3,41 @@ module ShoppingCart
     # def back_to_orders_link
     #   regular_link t('show.back_to_orders'), orders_path
     # end
-    #
-    # def back_to_shop_link
-    #   regular_link t('index.back_to_shop'), books_path
-    # end
-    #
+
+    def back_to_shop_link
+      link_to t('cart.back_to_shop'),
+              main_app.root_path,
+              class: 'btn btn-default'
+    end
+
     # def current_order_link_to_cart
     #   regular_link t('index.to_cart').upcase, cart_path
     # end
-    #
-    # def continue_shopping_link
-    #   regular_link t('orders.edit.to_shop'), books_path
-    # end
-    #
+
+    def continue_shopping_link
+      link_to t('cart.back_to_shop'),
+              main_app.root_path,
+              class: 'btn'
+    end
+
     # def link_to_checkout
     #   link_to t('orders.edit.checkout'),
     #           checkout_index_path,
     #           class: 'btn btn-primary'
     # end
-    #
-    # def empty_cart_link order
-    #   link_to t('orders.edit.empty_cart'),
-    #           order,
-    #           method: :delete,
-    #           class: 'btn btn-success'
-    # end
+
+    def empty_cart_link id
+      link_to t('cart.delete_order'),
+              shopping_cart.order_path(id),
+              method: :delete,
+              class: 'btn'
+    end
 
     def delete_item_link id
       link_to t('cart.delete_item'),
               shopping_cart.order_item_path(id),
               method: :delete,
-              class: 'btn btn-default btn-sm'
+              class: 'btn btn-sm'
     end
 
     # def delete_item_button id

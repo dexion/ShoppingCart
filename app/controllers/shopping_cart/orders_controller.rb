@@ -1,6 +1,6 @@
 module ShoppingCart
   class OrdersController < ApplicationController
-    # before_action :set_order, only: [:update, :destroy]
+    before_action :set_order, only: [:update, :destroy]
 
     # decorates_assigned :order
 
@@ -17,19 +17,21 @@ module ShoppingCart
       @order = Order.where(user_id: current_user.id).in_progress.first
     end
 
-    # def update
-    #   UpdateOrder.call(@order, params) do
-    #     on(:ok)      { updated_notice('Order') }
-    #     on(:invalid) { update_error('Order') }
-    #   end
-    #   redirect_to cart_path
-    # end
-    #
-    # def destroy
-    #   @order.destroy ? deleted_notice('Order') : delete_error('Order')
-    #   redirect_to cart_path
-    # end
-    #
+    def update
+      UpdateOrder.call(@order, params) do
+        on(:ok)      { flash[:notice] = t('flash.updated', obj: 'Order') }
+        on(:invalid) { flash[:error] = t('flash.not_updated', obj: 'Order') }
+        # on(:ok)      { updated_notice('Order') }
+        # on(:invalid) { update_error('Order') }
+      end
+      redirect_to root_path
+    end
+
+    def destroy
+      @order.destroy
+      redirect_to root_path
+    end
+
     def create
       CreateOrder.call(params) do
         on(:ok)       { redirect_to root_path }
@@ -37,10 +39,10 @@ module ShoppingCart
       end
     end
 
-    # private
+    private
 
-    # def set_order
-    #   @order = Order.find_by_id params[:id]
-    # end
+    def set_order
+      @order = Order.find_by_id params[:id]
+    end
   end
 end
