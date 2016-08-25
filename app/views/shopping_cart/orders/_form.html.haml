@@ -36,4 +36,4 @@
                            placeholder: (order.coupon ? order.coupon.code : t('cart.coupon_code')),
                            disabled: (true if order.coupon)
         %td.text-center= f.submit t('cart.update_order'), class: 'btn btn-success'
-        -# %td.text-center= link_to_checkout
+        %td.text-center= link_to_checkout

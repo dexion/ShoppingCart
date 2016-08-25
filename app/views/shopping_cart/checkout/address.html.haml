@@ -1,0 +1,19 @@
+= render partial: 'ckeckout_header', locals: { step: @step }
+%main.raw
+  = render partial: 'errors_messages', locals: { order: @order }
+  = form_for @order, url: wizard_path do |f|
+    .raw
+      .col-md-4
+        = render partial: 'address_fields',
+          locals: { f: f, type: :billing, order: @order, user: current_user }
+      .col-md-4
+        = render partial: 'address_fields',
+          locals: { f: f, type: :shipping, order: @order, user: current_user }
+      .col-md-4
+        = render partial: 'order_summary',
+          locals: { order: @order }
+    .raw
+      .col-md-12.text-left
+        = back_to_cart_link
+        = f.submit t('checkout.continue'), class: 'btn'
+        = link_to_confirmation if @order.has_all_data?

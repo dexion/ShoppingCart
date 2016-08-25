@@ -7,14 +7,8 @@ module ShoppingCart
     # belongs_to :credit_card
     # belongs_to :delivery
     has_one :coupon, dependent: :destroy
-    # has_one :order_shipping,
-    #         -> { where addressable_type: 'order_shipping' },
-    #         class_name: Address, foreign_key: :addressable_id,
-    #         dependent: :destroy
-    # has_one :order_billing,
-    #         -> { where addressable_type: 'order_billing' },
-    #         class_name: Address, foreign_key: :addressable_id,
-    #         dependent: :destroy
+    has_one :shipping, class_name: Address, dependent: :destroy
+    has_one :billing, class_name: Address, dependent: :destroy
 
     accepts_nested_attributes_for :order_items, allow_destroy: true
 
@@ -68,8 +62,8 @@ module ShoppingCart
       self.destroy if order_items.count.zero?
     end
 
-  #   def has_all_data?
-  #     order_billing && order_shipping && credit_card && delivery
-  #   end
+    def has_all_data?
+      billing && shipping && credit_card && delivery
+    end
   end
 end

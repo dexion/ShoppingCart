@@ -20,11 +20,11 @@ module ShoppingCart
               class: 'btn'
     end
 
-    # def link_to_checkout
-    #   link_to t('orders.edit.checkout'),
-    #           checkout_index_path,
-    #           class: 'btn btn-primary'
-    # end
+    def link_to_checkout
+      link_to t('cart.checkout'),
+              checkout_index_path,
+              class: 'btn'
+    end
 
     def empty_cart_link id
       link_to t('cart.delete_order'),

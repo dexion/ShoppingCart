@@ -4,6 +4,9 @@ en:
   #   processing: "Processing"
   #   in_delivery: "In delivery"
   #   delivered: "Delivered"
+  general:
+    error: 'error'
+    prohibited_from_save: 'prohibited from been saved'
   flash:
     updated: "%{obj} updated."
     not_updated: "Something went wrong & %{obj} was not updated."
@@ -24,6 +27,16 @@ en:
     discount: 'Discount'
     update_order: 'Update'
     coupon_code: 'Coupon'
+    checkout: 'Checkout'
+  checkout:
+    page_title: 'Checkout'
+    country: 'Country'
+    to_cart: '<< Back to cart'
+    use_billing: 'Use billing address'
+    order_summary: 'Order summary'
+    item_total: 'Item total'
+    order_total: 'Order total'
+    continue: 'Save & continue'
   # index:
   #   orders_title: "Your orders"
   #   to_cart: "Go to cart"

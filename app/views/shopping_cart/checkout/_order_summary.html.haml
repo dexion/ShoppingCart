@@ -1,0 +1,15 @@
+.well
+  %h3= t('checkout.order_summary')
+  %ul.list-group
+    %li#item_total_field.list-group-item{ data: { item_total: order.total } }
+      = t('checkout.item_total')
+      = order.total_in_currency
+    - unless step == :address
+      %li.list-group-item
+        = t('shipping_price')
+        %span#shipping_price_field
+          = order.delivery.decorate.price_in_currency unless step == :delivery
+      %li.list-group-item
+        = t('checkout.order_total')
+        %span#order_total_field
+          = order.total_with_delivery unless step == :delivery
