@@ -5,10 +5,10 @@ module ShoppingCart
     has_many   :order_items, dependent: :destroy
     belongs_to :user, class_name: 'User'
     # belongs_to :credit_card
-    # belongs_to :delivery
+    belongs_to :delivery, optional: true
     has_one :coupon, dependent: :destroy
-    has_one :shipping, class_name: Address, dependent: :destroy
-    has_one :billing, class_name: Address, dependent: :destroy
+    has_one :shipping, dependent: :destroy
+    has_one :billing, dependent: :destroy
 
     accepts_nested_attributes_for :order_items, allow_destroy: true
 
@@ -40,8 +40,6 @@ module ShoppingCart
       end
     end
 
-  #   scope :with_books, -> { includes(order_items: :book) }
-  #
     def add_item(id, type, quantity = 1)
       item = order_items.where("productable_id = ? AND productable_type = ?", id, type).first
       if item
@@ -63,7 +61,8 @@ module ShoppingCart
     end
 
     def has_all_data?
-      billing && shipping && credit_card && delivery
+      billing && shipping && delivery
+      # billing && shipping && credit_card && delivery
     end
   end
 end

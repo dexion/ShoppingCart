@@ -12,4 +12,5 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require shopping_cart/use_billing
 //= require_tree .

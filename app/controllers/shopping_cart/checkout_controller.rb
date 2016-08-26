@@ -9,21 +9,21 @@ module ShoppingCart
 
     def show
       @step = step
-      # @deliveries = Delivery.all.decorate
+      @deliveries = Delivery.all.decorate
       ValidateStep.call(@step, @order) do
         on(:ok)       { render_wizard }
         on(:invalid)  { redirect_to cart_path }
       end
     end
 
-    # def update
-    #   ProceedCheckout.call(params, @order, step) do
-    #     on(:ok)         { render_wizard @order }
-    #     on(:invalid)    { redirect_to cart_path }
-    #     on(:validation) { render_wizard }
-    #   end
-    # end
-    
+    def update
+      ProceedCheckout.call(params, @order, step) do
+        on(:ok)         { render_wizard @order }
+        on(:invalid)    { redirect_to root_path }
+        on(:validation) { render_wizard }
+      end
+    end
+
     private
 
     def set_order

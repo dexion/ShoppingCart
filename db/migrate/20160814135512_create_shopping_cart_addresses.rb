@@ -8,6 +8,7 @@ class CreateShoppingCartAddresses < ActiveRecord::Migration[5.0]
       t.string :first_name
       t.string :last_name
       t.string :country_code
+      t.string :type
       t.belongs_to :order, index: true
       t.timestamps
     end

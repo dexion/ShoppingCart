@@ -1,10 +1,10 @@
 module ShoppingCart
   module CheckoutHelper
-    # def link_to_previous_step
-    #   link_to t('previous_step'),
-    #           previous_wizard_path,
-    #           class: 'btn btn-default'
-    # end
+    def link_to_previous_step
+      link_to t('checkout.previous_step'),
+              previous_wizard_path,
+              class: 'btn'
+    end
 
     # def link_to_confirmation
     #   link_to t('to_confirmation'),

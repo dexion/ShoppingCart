@@ -1,0 +1,9 @@
+.well
+  %h3= t('checkout.deliveries')
+  %ul.list-group
+    - deliveries.each_with_index do |delivery, i|
+      %li.fields.form-group.list-group-item
+        = f.radio_button :delivery_id, delivery.id,
+                         checked: (true if i == 0),
+                         data: {price: delivery.price}
+        = f.label :delivery_id, delivery.full_info

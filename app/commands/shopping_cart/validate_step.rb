@@ -28,10 +28,10 @@ module ShoppingCart
       end
     end
 
-    # def has_address?
-    #   @order.order_billing && @order.order_shipping
-    # end
-    #
+    def has_address?
+      @order.billing && @order.shipping
+    end
+
     # def has_address_delivery?
     #   has_address? && @order.delivery
     # end
