@@ -15,5 +15,5 @@
     .raw
       .col-md-12.text-left
         = back_to_cart_link
-        = f.submit t('checkout.continue'), class: 'btn'
+        = f.submit t('checkout.continue'), class: 'btn btn-primary'
         = link_to_confirmation if @order.has_all_data?

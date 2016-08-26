@@ -6,7 +6,7 @@
       = order.total_in_currency
     - unless step == :address
       %li.list-group-item
-        = t('shipping_price')
+        = t('checkout.shipping_price')
         %span#shipping_price_field
           = order.delivery.decorate.price_in_currency unless step == :delivery
       %li.list-group-item

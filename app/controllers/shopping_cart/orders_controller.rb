@@ -14,7 +14,7 @@ module ShoppingCart
     # end
 
     def edit
-      @order = Order.where(user_id: current_user.id).in_progress.first.decorate
+      @order = Order.where(user_id: current_user.id).in_progress.first.try(:decorate)
     end
 
     def update

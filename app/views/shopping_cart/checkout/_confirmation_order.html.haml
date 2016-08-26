@@ -3,7 +3,7 @@
   %table.table#current_order
     %thead
       %tr.active
-        %th.lead.text-center{colspan:2}= t('cart.product')
+        %th.lead.text-center= t('cart.product')
         %th.lead.text-center= t('cart.quantity')
         %th.lead.text-center= t('cart.price')
         %th.lead.text-center= t('cart.total')
@@ -15,7 +15,7 @@
           %td{width:"10%"}= order_item.productable.price
           %td{width:"10%"}= number_to_currency order_item.item_total
       %tr
-        %td{colspan:3}
+        %td{colspan:2}
         %td.text-right
           = t('checkout.item_total')
           %br= t('checkout.shipping_price')
@@ -23,7 +23,7 @@
           = order.total_in_currency
           %br= order.delivery.decorate.price_in_currency
       %tr
-        %td{colspan:3}
+        %td{colspan:2}
         %td.text-right
           %strong= t('checkout.order_total')
         %td

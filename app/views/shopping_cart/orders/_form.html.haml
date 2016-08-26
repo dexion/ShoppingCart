@@ -5,12 +5,13 @@
         %th.lead.text-center= t('cart.product')
         %th.lead.text-center= t('cart.quantity')
         %th.lead.text-center= t('cart.price')
-        %th.lead.text-center{colspan:2}= t('cart.total')
+        %th.lead.text-center= t('cart.total')
     %tbody.text-center
       = f.fields_for :order_items do |f|
         %tr
-          %td.text-left{width:'60%'}
+          %td{width:'60%'}
             %h4= f.object.productable.title
+            %p= f.object.productable.try(:description)
           %td{width:'10%'}
             = f.number_field :quantity, class: 'form-control'
             = f.hidden_field :id
@@ -18,7 +19,7 @@
           %td{width:'10%'}= number_to_currency f.object.item_total
           %td{width:'10%'}= delete_item_link f.object.id
       %tr.lead
-        %td{colspan:3}
+        %td{colspan:2}
         %td.text-right
           %p= t('cart.discount') if order.coupon
           %p= t('cart.total')
@@ -26,7 +27,7 @@
           %p= order.discount if order.coupon
           %p= number_to_currency order.total
       %tr
-        %td.text-center
+        %td.text-left
           = empty_cart_link order.id
         %td.text-left
           = continue_shopping_link
@@ -35,5 +36,5 @@
             = f.text_field :code, class: 'form-control',
                            placeholder: (order.coupon ? order.coupon.code : t('cart.coupon_code')),
                            disabled: (true if order.coupon)
-        %td.text-center= f.submit t('cart.update_order'), class: 'btn btn-success'
+        %td.text-center= f.submit t('cart.update_order'), class: 'btn btn-primary'
         %td.text-center= link_to_checkout

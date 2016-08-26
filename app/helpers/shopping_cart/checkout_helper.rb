@@ -3,13 +3,13 @@ module ShoppingCart
     def link_to_previous_step
       link_to t('checkout.previous_step'),
               previous_wizard_path,
-              class: 'btn'
+              class: 'btn btn-default'
     end
 
     def link_to_confirmation
       link_to t('checkout.to_confirmation'),
               wizard_path(:confirm),
-              class: 'btn btn-success'
+              class: 'btn btn-default'
     end
 
     def edit_link_to step
@@ -17,7 +17,7 @@ module ShoppingCart
     end
 
     def back_to_cart_link
-      link_to t('checkout.to_cart'), root_path, class: 'btn'
+      link_to t('checkout.to_cart'), root_path, class: 'btn btn-default'
     end
 
     def fill_address(customer, order, type, field)
