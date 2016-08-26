@@ -39,6 +39,8 @@ en:
     continue: 'Save & continue'
     previous_step: 'Previous step'
     deliveries: 'Delivery types'
+    credit_card: 'Credit Card'
+    to_confirmation: 'Confirm >>'
   # index:
   #   orders_title: "Your orders"
   #   to_cart: "Go to cart"

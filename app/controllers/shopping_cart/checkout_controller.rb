@@ -12,7 +12,7 @@ module ShoppingCart
       @deliveries = Delivery.all.decorate
       ValidateStep.call(@step, @order) do
         on(:ok)       { render_wizard }
-        on(:invalid)  { redirect_to cart_path }
+        on(:invalid)  { redirect_to root_path }
       end
     end
 

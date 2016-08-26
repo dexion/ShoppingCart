@@ -4,7 +4,7 @@ module ShoppingCart
   class Order < ApplicationRecord
     has_many   :order_items, dependent: :destroy
     belongs_to :user, class_name: 'User'
-    # belongs_to :credit_card
+    belongs_to :credit_card, optional: true
     belongs_to :delivery, optional: true
     has_one :coupon, dependent: :destroy
     has_one :shipping, dependent: :destroy
@@ -61,8 +61,7 @@ module ShoppingCart
     end
 
     def has_all_data?
-      billing && shipping && delivery
-      # billing && shipping && credit_card && delivery
+      billing && shipping && credit_card && delivery
     end
   end
 end

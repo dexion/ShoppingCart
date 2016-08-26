@@ -1,0 +1,23 @@
+.well
+  %h3= t('checkout.credit_card')
+  = f.simple_fields_for :credit_card_attributes do |cc|
+    .row
+      .col-md-6
+        = cc.input :first_name,
+          input_html: { value: order.try(:credit_card).try(:first_name) }
+      .col-md-6
+        = cc.input :last_name,
+          input_html: { value: order.try(:credit_card).try(:last_name) }
+    .row
+      .col-md-6
+        = cc.input :number,
+          input_html: { value: order.try(:credit_card).try(:number) }
+      .col-md-2
+        = cc.input :cvv,
+          input_html: { value: order.try(:credit_card).try(:cvv), placeholder: '3 digits' }
+      .col-md-2
+        = cc.input :month, collection: 1..12, selected: 1
+      .col-md-2
+        = cc.input :year,
+          collection: ((Time.zone.now.year + 1)..(Time.zone.now.year + 3)),
+          selected: (Time.zone.now.year + 1)

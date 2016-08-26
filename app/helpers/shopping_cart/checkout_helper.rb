@@ -6,11 +6,11 @@ module ShoppingCart
               class: 'btn'
     end
 
-    # def link_to_confirmation
-    #   link_to t('to_confirmation'),
-    #           wizard_path(:confirm),
-    #           class: 'btn btn-success'
-    # end
+    def link_to_confirmation
+      link_to t('checkout.to_confirmation'),
+              wizard_path(:confirm),
+              class: 'btn btn-success'
+    end
 
     # def edit_link_to step
     #   link_to t('edit'), wizard_path(step)

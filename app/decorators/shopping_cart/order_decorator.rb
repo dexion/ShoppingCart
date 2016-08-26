@@ -15,9 +15,9 @@ module ShoppingCart
     #   h.l(object.created_at, format: :full)
     # end
 
-    # def total_with_delivery
-    #   h.number_to_currency(object.total + object.delivery.price)
-    # end
+    def total_with_delivery
+      h.number_to_currency(object.total + object.delivery.price)
+    end
 
     def discount
       h.number_to_percentage(object.coupon.discount, precision: 1)
