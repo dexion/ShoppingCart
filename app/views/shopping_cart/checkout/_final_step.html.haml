@@ -1,0 +1,7 @@
+= render partial: 'ckeckout_header', locals: {step: @step}
+%main.raw
+  = render partial: 'errors_messages', locals: {order: @order}
+  = form_for @order, url: wizard_path do |f|
+    = render partial: 'confirmation_details', locals: {order: @order, step: @step}
+    = render partial: 'confirmation_order', locals: {order: @order}
+    = render partial: template, locals: {f: f, order: @order}
