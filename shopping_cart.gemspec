@@ -25,4 +25,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'wicked'
   s.add_dependency 'simple_form'
   s.add_dependency 'country_select'
+  s.add_dependency 'credit_card_validations'
 end

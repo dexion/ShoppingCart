@@ -4,6 +4,7 @@ PATH
     shopping_cart (0.1.0)
       aasm
       country_select
+      credit_card_validations
       drape
       haml
       pg
@@ -73,6 +74,9 @@ GEM
     country_select (2.5.2)
       countries (~> 1.2.0)
       sort_alphabetical (~> 1.0)
+    credit_card_validations (3.2.2)
+      activemodel (>= 3)
+      activesupport (>= 3)
     currencies (0.4.2)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)

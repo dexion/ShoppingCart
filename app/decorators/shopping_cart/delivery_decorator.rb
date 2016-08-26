@@ -10,13 +10,13 @@ module ShoppingCart
       "#{object.title} + #{price_in_currency}"
     end
 
-    # def full_info_list
-    #   h.capture_haml do
-    #     h.haml_tag :ul, class: 'list-unstyled' do
-    #       h.haml_tag(:li) { h.haml_concat object.title }
-    #       h.haml_tag(:li) { h.haml_concat price_in_currency }
-    #     end
-    #   end
-    # end
+    def full_info_list
+      h.capture_haml do
+        h.haml_tag :ul, class: 'list-unstyled' do
+          h.haml_tag(:li) { h.haml_concat object.title }
+          h.haml_tag(:li) { h.haml_concat price_in_currency }
+        end
+      end
+    end
   end
 end

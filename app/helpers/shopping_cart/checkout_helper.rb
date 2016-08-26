@@ -12,9 +12,9 @@ module ShoppingCart
               class: 'btn btn-success'
     end
 
-    # def edit_link_to step
-    #   link_to t('edit'), wizard_path(step)
-    # end
+    def edit_link_to step
+      link_to t('checkout.edit'), wizard_path(step)
+    end
 
     def back_to_cart_link
       link_to t('checkout.to_cart'), root_path, class: 'btn'

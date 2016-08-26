@@ -1,0 +1,26 @@
+.raw
+  .col-md-12
+    %h3
+      = t('checkout.confirm_order') if step == :confirm
+      = t('checkout.order_number', num: order.number) if step == :complete
+.raw
+  .col-md-3#billing_block
+    %h4
+      = t('checkout.billing')
+      %small= edit_link_to(:address) if step == :confirm
+    =order.billing.decorate.full_info
+  .col-md-3#shipping_block
+    %h4
+      = t('checkout.shipping')
+      %small= edit_link_to(:address) if step == :confirm
+    = order.shipping.decorate.full_info
+  .col-md-3#delivery_block
+    %h4
+      = t('checkout.delivery')
+      %small= edit_link_to(:delivery) if step == :confirm
+    = order.delivery.decorate.full_info_list
+  .col-md-3#payment_block
+    %h4
+      = t('checkout.payment')
+      %small= edit_link_to(:payment) if step == :confirm
+    = order.credit_card.decorate.full_info

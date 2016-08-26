@@ -37,10 +37,19 @@ en:
     item_total: 'Item total'
     order_total: 'Order total'
     continue: 'Save & continue'
-    previous_step: 'Previous step'
+    previous_step: '<< Previous step'
     deliveries: 'Delivery types'
     credit_card: 'Credit Card'
     to_confirmation: 'Confirm >>'
+    confirm_order: 'Confirm order'
+    order_number: 'Order #'
+    billing: 'Billing Address'
+    shipping: 'Shipping Address'
+    delivery: 'Delivery info'
+    payment: 'Payment info'
+    place_order: 'Place order'
+    edit: '(edit)'
+    shipping_price: 'Shipping'
   # index:
   #   orders_title: "Your orders"
   #   to_cart: "Go to cart"

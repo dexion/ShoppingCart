@@ -36,8 +36,8 @@ module ShoppingCart
       has_address? && @order.delivery
     end
 
-    # def has_all_data?
-    #   has_address_delivery? && @order.credit_card
-    # end
+    def has_all_data?
+      has_address_delivery? && @order.credit_card
+    end
   end
 end
