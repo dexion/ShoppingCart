@@ -1,9 +1,4 @@
 en:
-  # states:
-  #   in_progress: "In progress"
-  #   processing: "Processing"
-  #   in_delivery: "In delivery"
-  #   delivered: "Delivered"
   general:
     error: 'error'
     prohibited_from_save: 'prohibited from been saved'
@@ -13,10 +8,6 @@ en:
   cart:
     page_title: "Cart"
     empty_cart: "Nothing added to your order."
-    # total: "Order total:"
-    # back_to_shop: "Back to Shop"
-    # deleted: "Your order deleted successfuly"
-    # delete_error: "Something went wrong and your order was not deleted. Please, try again."
     product: "Product"
     price: "Price"
     quantity: "QTY"
@@ -28,6 +19,7 @@ en:
     update_order: 'Update'
     coupon_code: 'Coupon'
     checkout: 'Checkout'
+    create_order_failed: 'Something went wrong & order was not created.'
   checkout:
     page_title: 'Checkout'
     country: 'Country'
@@ -42,7 +34,7 @@ en:
     credit_card: 'Credit Card'
     to_confirmation: 'Confirm >>'
     confirm_order: 'Confirm order'
-    order_number: 'Order #'
+    order_number: 'Order № %{num}'
     billing: 'Billing Address'
     shipping: 'Shipping Address'
     delivery: 'Delivery info'
@@ -50,17 +42,3 @@ en:
     place_order: 'Place order'
     edit: '(edit)'
     shipping_price: 'Shipping'
-  # index:
-  #   orders_title: "Your orders"
-  #   to_cart: "Go to cart"
-  #   subtotal: "Subtotal:"
-  #   number: "Number"
-  #   completed_at: "Completed at"
-  #   total: "Total"
-  #   view: "View order"
-  #   no_orders: "You still have not ordered anything"
-  #   back_to_shop: "Back to Shop"
-  # show:
-  #   title: "Order information"
-  #   order_name_html: "Order %{num} <small>%{state}</small>"
-  #   back_to_orders: "Back to Orders"

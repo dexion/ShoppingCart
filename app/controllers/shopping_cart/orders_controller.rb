@@ -1,28 +1,18 @@
 module ShoppingCart
   class OrdersController < ApplicationController
+    include ShoppingCart::StandardFlashes
+
+    before_action :authenticate_user!
     before_action :set_order, only: [:update, :destroy]
 
-    # decorates_assigned :order
-
-    # def index
-    #   @orders = current_customer.orders
-    # end
-    #
-    # def show
-    #   @order = Order.with_books.find_by(id: params[:id])
-    #   back_to_shop('Order') unless @order
-    # end
-
     def edit
-      @order = Order.where(user_id: current_user.id).in_progress.first.try(:decorate)
+      @order = OrderInProgress.new(current_user.id).query
     end
 
     def update
       UpdateOrder.call(@order, params) do
-        on(:ok)      { flash[:notice] = t('flash.updated', obj: 'Order') }
-        on(:invalid) { flash[:error] = t('flash.not_updated', obj: 'Order') }
-        # on(:ok)      { updated_notice('Order') }
-        # on(:invalid) { update_error('Order') }
+        on(:ok)      { updated_notice('Order') }
+        on(:invalid) { update_error('Order') }
       end
       redirect_to root_path
     end
@@ -35,7 +25,7 @@ module ShoppingCart
     def create
       CreateOrder.call(params) do
         on(:ok)       { redirect_to root_path }
-        on(:invalid)  { redirect_to root_path, error: 'error without I18n' }
+        on(:invalid)  { create_order_failed }
       end
     end
 

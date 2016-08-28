@@ -16,8 +16,6 @@ module ShoppingCart
 
     private
 
-    # attr_reader :order
-
     def join_coupon
       coupon = Coupon.find_by(code: coupon_code)
       return unless coupon

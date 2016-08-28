@@ -7,4 +7,9 @@
     = javascript_include_tag "shopping_cart/application"
     = csrf_meta_tags
   %body
-    = yield
+    .container
+      - flash.each do |key, value|
+        = content_tag :div, value,
+                      class: "flash #{key} alert alert-warning",
+                      role: 'alert'
+      = yield

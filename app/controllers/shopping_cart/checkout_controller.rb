@@ -2,7 +2,7 @@ module ShoppingCart
   class CheckoutController < ApplicationController
     include Wicked::Wizard
 
-    # before_action :authenticate_customer!
+    before_action :authenticate_user!
     before_action :set_order
 
     steps :address, :delivery, :payment, :confirm, :complete

@@ -15,7 +15,6 @@ module ShoppingCart
     after_validation :update_total
 
     include AASM
-    # attr_accessor :active_admin_requested_event
     aasm column: :state, whiny_transitions: false do
       state :in_progress, initial: true
       state :processing
