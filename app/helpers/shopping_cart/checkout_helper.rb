@@ -23,5 +23,11 @@ module ShoppingCart
     def fill_address(customer, order, type, field)
       order.public_send(type).try(field)
     end
+
+    def back_to_shop_link
+      link_to t('checkout.back_to_shop'),
+              main_app.root_path,
+              class: 'btn btn-default'
+    end
   end
 end

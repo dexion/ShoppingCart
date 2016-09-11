@@ -20,6 +20,7 @@ en:
     coupon_code: 'Coupon'
     checkout: 'Checkout'
     create_order_failed: 'Something went wrong & order was not created.'
+    back_to_shop: 'Back to Shop'
   checkout:
     page_title: 'Checkout'
     country: 'Country'
@@ -42,3 +43,4 @@ en:
     place_order: 'Place order'
     edit: '(edit)'
     shipping_price: 'Shipping'
+    back_to_shop: 'Back to Shop'

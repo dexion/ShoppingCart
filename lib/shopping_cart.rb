@@ -7,6 +7,11 @@ require 'simple_form'
 require 'country_select'
 require 'credit_card_validations'
 require 'bootstrap-sass'
+require 'rails-controller-testing'
+require 'devise'
+require 'ffaker'
+require 'database_cleaner'
+require 'jquery-rails'
 
 module ShoppingCart
   mattr_accessor :user_class
