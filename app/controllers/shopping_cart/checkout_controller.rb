@@ -1,11 +1,12 @@
+require_dependency "shopping_cart/application_controller"
+
 module ShoppingCart
   class CheckoutController < ApplicationController
     include Wicked::Wizard
 
-    before_action :authenticate_user!
+    before_action :set_steps
+    before_action :setup_wizard
     before_action :set_order
-
-    steps :address, :delivery, :payment, :confirm, :complete
 
     def show
       @step = step
@@ -29,6 +30,10 @@ module ShoppingCart
     def set_order
       @order = OrderForCheckout.new(current_user.id, step).query
       redirect_to(root_path) unless @order
+    end
+
+    def set_steps
+      self.steps = ShoppingCart.checkout_steps
     end
   end
 end

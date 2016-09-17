@@ -1,8 +1,9 @@
+require_dependency "shopping_cart/application_controller"
+
 module ShoppingCart
   class OrdersController < ApplicationController
     include ShoppingCart::StandardFlashes
 
-    before_action :authenticate_user!
     before_action :set_order, only: [:update, :destroy]
 
     def edit

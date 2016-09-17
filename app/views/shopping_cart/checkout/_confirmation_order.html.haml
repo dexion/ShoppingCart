@@ -14,14 +14,15 @@
           %td{width:"10%"}= order_item.quantity
           %td{width:"10%"}= order_item.productable.price
           %td{width:"10%"}= number_to_currency order_item.item_total
-      %tr
-        %td{colspan:2}
-        %td.text-right
-          = t('checkout.item_total')
-          %br= t('checkout.shipping_price')
-        %td
-          = order.total_in_currency
-          %br= order.delivery.decorate.price_in_currency
+      - if wizard_steps.include? :delivery
+        %tr
+          %td{colspan:2}
+          %td.text-right
+            = t('checkout.item_total')
+            %br= t('checkout.shipping_price')
+          %td
+            = order.total_in_currency
+            %br= order.delivery.decorate.price_in_currency
       %tr
         %td{colspan:2}
         %td.text-right

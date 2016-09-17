@@ -1,0 +1,55 @@
+Description:
+    Creates initializator with specified user class & checkout steps. Mounts engine in main app routes. Copy all shopping_cart migrations.
+
+Example:
+    rails generate shopping_cart:install
+
+    This will create:
+Running via Spring preloader in process 31386
+      create  config/initializers/shopping_cart.rb
+User model (leave blank for 'User'): Customer
+      append  config/initializers/shopping_cart.rb
+Checkout steps (leave blank for confirmation only): address delivery payment
+      append  config/initializers/shopping_cart.rb
+Cart path (leave blank for '/cart'): cart
+      insert  config/routes.rb
+        rake  shopping_cart:install:migrations
+Copied migration 20160917111009_create_shopping_cart_addresses.shopping_cart.rb from shopping_cart
+Copied migration 20160917111010_create_shopping_cart_coupons.shopping_cart.rb from shopping_cart
+Copied migration 20160917111011_create_shopping_cart_credit_cards.shopping_cart.rb from shopping_cart
+Copied migration 20160917111012_create_shopping_cart_deliveries.shopping_cart.rb from shopping_cart
+Copied migration 20160917111013_create_shopping_cart_order_items.shopping_cart.rb from shopping_cart
+Copied migration 20160917111014_create_shopping_cart_orders.shopping_cart.rb from shopping_cart
+Do you want to run ShoppingCart migrations now? yes
+        rake  db:migrate SCOPE=shopping_cart
+== 20160916085535 CreateShoppingCartAddresses: migrating ======================
+-- create_table(:shopping_cart_addresses)
+   -> 0.0156s
+== 20160916085535 CreateShoppingCartAddresses: migrated (0.0157s) =============
+
+== 20160916085536 CreateShoppingCartCoupons: migrating ========================
+-- create_table(:shopping_cart_coupons)
+   -> 0.0135s
+== 20160916085536 CreateShoppingCartCoupons: migrated (0.0136s) ===============
+
+== 20160916085537 CreateShoppingCartCreditCards: migrating ====================
+-- create_table(:shopping_cart_credit_cards)
+   -> 0.0147s
+== 20160916085537 CreateShoppingCartCreditCards: migrated (0.0148s) ===========
+
+== 20160916085538 CreateShoppingCartDeliveries: migrating =====================
+-- create_table(:shopping_cart_deliveries)
+   -> 0.0099s
+== 20160916085538 CreateShoppingCartDeliveries: migrated (0.0102s) ============
+
+== 20160916085539 CreateShoppingCartOrderItems: migrating =====================
+-- create_table(:shopping_cart_order_items)
+   -> 0.0213s
+== 20160916085539 CreateShoppingCartOrderItems: migrated (0.0216s) ============
+
+== 20160916085540 CreateShoppingCartOrders: migrating =========================
+-- enable_extension("uuid-ossp")
+   -> 0.0557s
+-- create_table(:shopping_cart_orders)
+   -> 0.0303s
+== 20160916085540 CreateShoppingCartOrders: migrated (0.0862s) ================

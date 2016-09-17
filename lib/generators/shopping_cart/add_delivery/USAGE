@@ -1,0 +1,8 @@
+Description:
+    Creates new Delivery type
+
+Example:
+    rails g shopping_cart:add_delivery 'Nova Poshta' 5
+
+    This will create:
+        SQL (1.2ms)  INSERT INTO "shopping_cart_deliveries" ("title", "price", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["title", "Nova Poshta"], ["price", 5.0], ["created_at", 2016-09-17 11:07:32 UTC], ["updated_at", 2016-09-17 11:07:32 UTC]]

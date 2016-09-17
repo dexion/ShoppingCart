@@ -3,7 +3,7 @@ require 'aasm'
 module ShoppingCart
   class Order < ApplicationRecord
     has_many   :order_items, dependent: :destroy
-    belongs_to :user, class_name: 'User'
+    belongs_to :user, class_name: ShoppingCart.user_class
     belongs_to :credit_card, optional: true
     belongs_to :delivery, optional: true
     has_one :coupon, dependent: :destroy
@@ -57,10 +57,6 @@ module ShoppingCart
 
     def destroy_if_orphant
       self.destroy if order_items.count.zero?
-    end
-
-    def has_all_data?
-      billing && shipping && credit_card && delivery
     end
   end
 end

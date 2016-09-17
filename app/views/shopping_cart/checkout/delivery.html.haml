@@ -4,14 +4,10 @@
   = form_for @order, url: wizard_path do |f|
     .raw
       .col-md-8
-        = render partial: 'deliveries',
-                 locals: { f: f, deliveries: @deliveries }
+        = render partial: 'deliveries', locals: { f: f, deliveries: @deliveries }
       .col-md-4
         = render partial: 'order_summary',
                  locals: { step: @step, order: @order }
     .raw
       .col-md-12.text-left
-        = link_to_previous_step
-        = f.hidden_field :id
-        = f.submit t('checkout.continue'), class: 'btn btn-primary'
-        = link_to_confirmation if @order.has_all_data?
+        = render partial: 'bottom_buttons', locals: { f: f }

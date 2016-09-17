@@ -19,5 +19,5 @@
         = cc.input :month, collection: 1..12, selected: 1
       .col-md-2
         = cc.input :year,
-          collection: ((Time.zone.now.year + 1)..(Time.zone.now.year + 3)),
-          selected: (Time.zone.now.year + 1)
+          collection: credit_card_available_years,
+          selected: credit_card_selected_year

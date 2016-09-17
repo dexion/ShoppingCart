@@ -5,10 +5,12 @@
       = t('checkout.item_total')
       = order.total_in_currency
     - unless step == :address
-      %li.list-group-item
-        = t('checkout.shipping_price')
-        %span#shipping_price_field
-          = order.delivery.decorate.price_in_currency unless step == :delivery
+      - if wizard_steps.include? :delivery
+        %li.list-group-item
+          = t('checkout.shipping_price')
+          %span#shipping_price_field
+            - unless step == :delivery
+              = order.delivery.try(:decorate).try(:price_in_currency) || '...'
       %li.list-group-item
         = t('checkout.order_total')
         %span#order_total_field

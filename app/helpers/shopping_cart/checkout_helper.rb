@@ -29,5 +29,24 @@ module ShoppingCart
               main_app.root_path,
               class: 'btn btn-default'
     end
+
+    def first_step? value
+      value == wizard_steps[0]
+    end
+
+    def credit_card_available_years
+      (Time.zone.now.year + 1)..(Time.zone.now.year + 3)
+    end
+
+    def credit_card_selected_year
+      (Time.zone.now.year + 1)
+    end
+
+    def ready_to_confirm? order
+      ValidateStep.call(:confirm, order) do
+        on(:ok)       { return true }
+        on(:invalid)  { return false }
+      end
+    end
   end
 end

@@ -13,7 +13,7 @@ module ShoppingCart
           when :address  then AddCheckoutAddresses.call(@order, @params)
           when :delivery then AddCheckoutDelivery.call(@order, @params)
           when :payment  then AddCheckoutPayment.call(@order, @params)
-          when :confirm  then PlaceOrder.call(@order, @params)
+          when :confirm  then PlaceOrder.call(@order)
         end
       end
       @order.errors.any? ? broadcast(:validation) : broadcast(:ok)

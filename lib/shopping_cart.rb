@@ -15,4 +15,5 @@ require 'jquery-rails'
 
 module ShoppingCart
   mattr_accessor :user_class
+  mattr_accessor :checkout_steps
 end

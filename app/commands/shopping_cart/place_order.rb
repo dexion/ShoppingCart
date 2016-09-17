@@ -1,23 +1,17 @@
 module ShoppingCart
   class PlaceOrder < Rectify::Command
-    def initialize(order, params)
+    def initialize(order)
       @order = order
-      @params = params
     end
 
     def call
-      place_order if order_valid?
+      ValidateStep.call(:confirm, @order) do
+        on(:ok)       { place_order }
+        on(:invalid)  { redirect_to root_path }
+      end
     end
 
     private
-
-    def order_valid?
-      nested_models.all? { |model| @order.public_send(model).valid? }
-    end
-
-    def nested_models
-      [:shipping, :billing, :credit_card, :delivery]
-    end
 
     def place_order
       @order.completed

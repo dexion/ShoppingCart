@@ -7,37 +7,46 @@ module ShoppingCart
 
     def call
       return broadcast(:invalid) unless @step && @order
-      if order_has_data_for(@step)
-        broadcast(:ok)
-      else
-        broadcast(:invalid)
-      end
+      all_steps_valid? ? broadcast(:ok) :  broadcast(:invalid)
     end
 
     private
 
-    def order_has_data_for step
+    def all_steps_valid?
+      steps_to_validate.all? do |step|
+        order_has_data_for? step
+      end
+    end
+
+    def steps_to_validate
+      steps = ShoppingCart.checkout_steps
+      steps[0...steps.index(@step)]
+    end
+
+    def order_has_data_for? step
       case step
-        when :address  then true
-        when :delivery then has_address? ?          true : false
-        when :payment  then has_address_delivery? ? true : false
-        when :confirm  then has_all_data? ?         true : false
-        when :complete then true
-        else
-          false
+      when :address  then has_address?  ? true : false
+      when :delivery then has_delivery? ? true : false
+      when :payment  then has_payment?  ? true : false
+      when :confirm  then confirmed?    ? true : false
+      else false
       end
     end
 
     def has_address?
-      @order.billing && @order.shipping
+      @order.billing.try(:valid?) && @order.shipping.try(:valid?)
     end
 
-    def has_address_delivery?
-      has_address? && @order.delivery
+    def has_delivery?
+      @order.delivery.try(:valid?)
     end
 
-    def has_all_data?
-      has_address_delivery? && @order.credit_card
+    def has_payment?
+      @order.credit_card.try(:valid?)
+    end
+
+    def confirmed?
+      @order.processing?
     end
   end
 end
