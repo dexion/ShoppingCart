@@ -15,9 +15,9 @@ ShoppingCart plugin provides checkout functionality, which can be integrated int
   - [Filling the database](#filling-the-database)
   - [Integration into the templates](#integration-into-the-templates)
  3. [Creating custom steps](#creating-custom-steps)
-  - [Define your step](#define-step-name)
+  - [Define your step](#define-your-step)
   - [Create model and configure associations](#create-model-and-configure-associations)
-  - [Prepare data for views](#prepare-data-for-views) (optional)
+  - [Prepare data for templates](#prepare-data-for-templates)
   - [Create templates](#create-templates)
   - [Create a handler](#create-a-handler)
 
@@ -44,7 +44,7 @@ By default checkout consists of 5 steps.
  4. `:confirm` – view all previous information and confirm it
  5. `:complete` – success message and final order information
 
-`[:address, :delivery, :payment]` – are not required, so you can disable one/all of them, can change their order. You also can [specify your own steps](#add-custom-steps).
+`[:address, :delivery, :payment]` – are not required, so you can disable one/all of them, can change their order. You also can [specify your own steps](#creating-custom-steps).
 
 `[:confirm, :complete]` – are required and can not be removed.
 
@@ -64,7 +64,7 @@ For now you can not change these states. Wait for this feature in future version
 
 ### Requirements
 
-* **User model** –  must be configurated with [devise](https://github.com/plataformatec/devise).
+* **User model** –  must be configurated with [Devise](https://github.com/plataformatec/devise).
 * **Product models** – must have `title` and `price` colums.
 * **Database** – [PostgreSQL](https://www.postgresql.org)
 
@@ -77,7 +77,7 @@ For now you can not change these states. Wait for this feature in future version
 Add this line to your application's Gemfile and run the bundle command to install it.
 
 ```ruby
-gem 'shopping_cart'
+gem 'shopping-cart'
 ```
 
 Run the built-in generator with the command:
@@ -237,12 +237,12 @@ It's important to remember that at that point you are inside a form for current 
 Also you have access to:
 
  - `@order` with current order
- - `@checkout_data` with the result of [calling query object](#prepare-data-for-views)
+ - `@checkout_data` with the result of [calling query object](#prepare-data-for-templates)
  - form helper `f`
 
 In our example we are gonna to list all available packing options. Also we want to mark an option, which is already associated with current order.
 
-```ruby
+```
 = render 'shopping_cart/checkout/checkout_form' do |f|
   .col-md-8
     .well
@@ -267,7 +267,7 @@ It's required to place all code here inside `div` with id named by your step. Yo
 
 Here goes our example:
 
-```ruby
+```
 #packing_block
   %h4
     Packing opitons
