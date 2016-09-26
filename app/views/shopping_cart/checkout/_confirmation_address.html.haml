@@ -1,0 +1,10 @@
+#billing_block
+  %h4
+    = t('checkout.billing')
+    %small= edit_step_link :address
+  =order.billing.decorate.full_info
+#shipping_block
+  %h4
+    = t('checkout.shipping')
+    %small= edit_step_link :address
+  = order.shipping.decorate.full_info

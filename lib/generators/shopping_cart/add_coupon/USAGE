@@ -1,0 +1,8 @@
+Description:
+    Creates new Coupon in database
+
+Example:
+    rails g shopping_cart:add_coupon 'i want discount' 25
+
+    This will create:
+        SQL (0.9ms)  INSERT INTO "shopping_cart_coupons" ("code", "discount", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["code", "i want discount"], ["discount", 25.0], ["created_at", 2016-09-17 11:06:35 UTC], ["updated_at", 2016-09-17 11:06:35 UTC]]

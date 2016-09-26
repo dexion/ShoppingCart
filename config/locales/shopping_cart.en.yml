@@ -1,0 +1,46 @@
+en:
+  general:
+    error: 'error'
+    prohibited_from_save: 'prohibited from been saved'
+  flash:
+    updated: "%{obj} updated."
+    not_updated: "Something went wrong & %{obj} was not updated."
+  cart:
+    page_title: "Cart"
+    empty_cart: "Nothing added to your order."
+    product: "Product"
+    price: "Price"
+    quantity: "QTY"
+    total: "Total"
+    delete_item: 'Delete'
+    delete_order: 'Empty cart'
+    item_deleted: 'Item deleted'
+    discount: 'Discount'
+    update_order: 'Update'
+    coupon_code: 'Coupon'
+    checkout: 'Checkout'
+    create_order_failed: 'Something went wrong & order was not created.'
+    back_to_shop: 'Back to Shop'
+  checkout:
+    page_title: 'Checkout'
+    country: 'Country'
+    to_cart: '<< Back to cart'
+    use_billing: 'Use billing address'
+    order_summary: 'Order summary'
+    item_total: 'Item total'
+    order_total: 'Order total'
+    continue: 'Save & continue'
+    previous_step: '<< Previous step'
+    deliveries: 'Delivery types'
+    credit_card: 'Credit Card'
+    to_confirmation: 'Confirm >>'
+    confirm_order: 'Confirm order'
+    order_number: 'Order № %{num}'
+    billing: 'Billing Address'
+    shipping: 'Shipping Address'
+    delivery: 'Delivery info'
+    payment: 'Payment info'
+    place_order: 'Place order'
+    edit: '(edit)'
+    shipping_price: 'Shipping'
+    back_to_shop: 'Back to Shop'

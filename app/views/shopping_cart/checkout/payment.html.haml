@@ -1,0 +1,23 @@
+= render 'shopping_cart/checkout/checkout_form' do |f|
+  .col-md-8
+    .well#payment_fields
+      %h3= t('checkout.credit_card')
+      = f.simple_fields_for :credit_card_attributes do |cc|
+        .row
+          - [:first_name, :last_name].each do |name|
+            .col-md-6
+              = cc.input name,
+                input_html: { value: @order.try(:credit_card).try(name) }
+        .row
+          .col-md-6
+            = cc.input :number,
+              input_html: { value: @order.try(:credit_card).try(:number) }
+          .col-md-2
+            = cc.input :cvv,
+              input_html: { value: @order.try(:credit_card).try(:cvv), placeholder: '3 digits' }
+          .col-md-2
+            = cc.input :month, collection: 1..12, selected: 1
+          .col-md-2
+            = cc.input :year,
+              collection: credit_card_available_years,
+              selected: credit_card_selected_year

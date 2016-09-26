@@ -1,0 +1,8 @@
+-if order.errors.any?
+  .error-messages
+    %p
+      = pluralize(order.errors.count, t('general.error'))
+      = t('general.prohibited_from_save')
+    %ul
+      - order.errors.full_messages.each do |msg|
+        %li= msg

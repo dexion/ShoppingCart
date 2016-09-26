@@ -1,0 +1,31 @@
+.col-md-12
+  %h3= t('ordered_items')
+  %table.table#current_order
+    %thead
+      %tr.active
+        %th.lead.text-center= t('cart.product')
+        %th.lead.text-center= t('cart.quantity')
+        %th.lead.text-center= t('cart.price')
+        %th.lead.text-center= t('cart.total')
+    %tbody.text-center
+      - order.order_items.each do |order_item|
+        %tr
+          %td.text-left{width:"60%"}= order_item.productable.title
+          %td{width:"10%"}= order_item.quantity
+          %td{width:"10%"}= order_item.productable.price
+          %td{width:"10%"}= number_to_currency order_item.item_total
+      - if wizard_steps.include? :delivery
+        %tr
+          %td{colspan:2}
+          %td.text-right
+            = t('checkout.item_total')
+            %br= t('checkout.shipping_price')
+          %td
+            = order.total_in_currency
+            %br= order.delivery.decorate.price_in_currency
+      %tr
+        %td{colspan:2}
+        %td.text-right
+          %strong= t('checkout.order_total')
+        %td
+          %strong= order.total_with_delivery

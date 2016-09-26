@@ -1,0 +1,5 @@
+= render 'shopping_cart/checkout/checkout_form' do |f|
+  - [:billing, :shipping].each do |type|
+    .col-md-4
+      = render partial: 'address_fields',
+        locals: { f: f, type: type, order: @order, user: @order.user }

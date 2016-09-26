@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @product.title %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @product.price %>
+</p>
+
+<div id='add_to_cart'>
+  <%= form_tag shopping_cart.orders_path, method: :post do %>
+    <%= number_field_tag :quantity, 1, min: '1' %>
+    <%= hidden_field_tag :productable_id, @product.id %>
+    <%= hidden_field_tag :productable_type, @product.class.to_s %>
+    <%= submit_tag 'Add to cart' %>
+  <% end %>
+</div>
+
+<%= link_to 'Edit', edit_product_path(@product) %> |
+<%= link_to 'Back', products_path %>

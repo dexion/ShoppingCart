@@ -1,0 +1,5 @@
+.raw
+  - wizard_steps[0...-2].each do |stp|
+    %div{:class => "col-md-#{confirm_step_col_size}"}
+      .well
+        = render partial: "confirmation_#{stp}", locals: { order: @order }

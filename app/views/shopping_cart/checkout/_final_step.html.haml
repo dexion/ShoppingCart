@@ -1,0 +1,9 @@
+.raw
+  .col-md-12
+    %h3
+      = t('checkout.confirm_order') if step == :confirm
+      = t('checkout.order_number', num: @order.number) if step == :complete
+= form_for @order, url: wizard_path do |f|
+  = render partial: 'confirmation_details', locals: {order: @order}
+  = render partial: 'confirmation_order', locals: {order: @order}
+  = render partial: "#{step}_buttons", locals: {f: f, order: @order}
