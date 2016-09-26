@@ -1,0 +1,5 @@
+#payment_block
+  %h4
+    = t('checkout.payment')
+    %small= edit_step_link :payment
+  = order.credit_card.decorate.full_info

@@ -1,0 +1,9 @@
+= form_for @order, url: wizard_path do |f|
+  .raw
+  = yield f
+  .col-md-4
+    = render partial: 'order_summary',
+      locals: { order: @order }
+  .raw
+    .col-md-12.text-left
+      = render partial: 'bottom_buttons', locals: { f: f }

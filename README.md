@@ -1,127 +1,133 @@
 [![Code Climate](https://codeclimate.com/github/kirill-oleynik/ShoppingCart/badges/gpa.svg)](https://codeclimate.com/github/kirill-oleynik/ShoppingCart)
 [![Build Status](https://travis-ci.org/kirill-oleynik/ShoppingCart.svg?branch=development)](https://travis-ci.org/kirill-oleynik/ShoppingCart)
+
 # ShoppingCart
+
 ShoppingCart plugin provides checkout functionality, which can be integrated into your online store and configured according to your business logic.
+
+ 1. [Description](#description)
+  - [Cart](#cart)
+  - [Checkout](#checkout)
+  - [Orders](#orders)
+  - [Requirements](#requirements)
+ 2. [Installation & Configuration](#installation-and-configuration)
+  - [Basic setup](#basic-setup)
+  - [Filling the database](#filling-the-database)
+  - [Integration into the templates](#integration-into-the-templates)
+ 3. [Creating custom steps](#creating-custom-steps)
+  - [Define your step](#define-step-name)
+  - [Create model and configure associations](#create-model-and-configure-associations)
+  - [Prepare data for views](#prepare-data-for-views) (optional)
+  - [Create templates](#create-templates)
+  - [Create a handler](#create-a-handler)
+
+---
 
 ## Description
 
 ### Cart
-The plugin provides a cart, in which logged in users can add any number of different types of products. Cart provides an opportunity to modify the amount of added products, as well as their removal from the order. The user can also enter a coupon code to receive the discount.
+
+The plugin provides a cart, in which logged in users can add any number and any types of products. Cart provides an opportunity to:
+
+ - change the amount of products
+ - remove products from the order
+ - apply a discount code
+ - empty cart
 
 ### Checkout
-By default checkout consists of 5 steps. The first three are used to obtain additional order information:
-* `:address` – user can specify billing & shipping addresses
-* `:delivery` – user can choose delivery method
-* `:payment` – user can enter credit card information.
-These steps may be canceled, amended or changed during the plugin connection & configuration. You can also configure the desired sequence of these steps.
 
-The last two steps are static:
-* `:confirmation`, where the user can view all the information and confirm it,
-* `:completed`, where he can see the message that order was created.
+By default checkout consists of 5 steps.
+
+ 1. `:address` – specify billing & shipping
+ 2. `:delivery` – choose delivery method
+ 3. `:payment` – add credit card
+ 4. `:confirm` – view all previous information and confirm it
+ 5. `:complete` – success message and final order information
+
+`[:address, :delivery, :payment]` – are not required, so you can disable one/all of them, can change their order. You also can [specify your own steps](#add-custom-steps).
+
+`[:confirm, :complete]` – are required and can not be removed.
 
 ### Orders
-The following states can be applied to orders for management:
-* `:in_progress` - created but not confirmed order by the user (the default state)
-* `:processing` - confirmed by the user, accepted in processing by the manager
-* `:in_delivery` - sent to customer
-* `:delivered` - delivered to the customer (the final state)
-* `:canceled` - canceled by the manager for some reason (the final state)
 
-## Installation & Configuration
-Add this line to your application's Gemfile:
+Orders can have 5 predefined states. You can use aasm-transactions (listed in third column) to change order state in your code.
+
+| State          | Description                                 | Method |
+| -------------- | ------------------------------------------- | ----- |
+| `:in_progress` | Created by customer but not confirmed yet (**default state**)  | *–* |
+| `:processing`  | Confirmed by customer and accepted in processing. You'll got this state after customer completed checkout.  | `:completed` |
+| `:in_delivery` | Sent to customer                            | `:sent_to_client` |
+| `:delivered`   | Delivered to the customer (**final state**) | `:delivered` |
+| `:canceled`    | Canceled by the manager (**final state**)   | `:canceled` |
+
+For now you can not change these states. Wait for this feature in future versions.
+
+### Requirements
+
+* **User model** –  must be configurated with [devise](https://github.com/plataformatec/devise).
+* **Product models** – must have `title` and `price` colums.
+* **Database** – [PostgreSQL](https://www.postgresql.org)
+
+---
+
+## Installation and Configuration
+
+### Basic setup
+
+Add this line to your application's Gemfile and run the bundle command to install it.
 
 ```ruby
 gem 'shopping_cart'
 ```
-Run the bundle command to install it.
 
 Run the built-in generator with the command:
+
 ```bash
 $ rails g shopping_cart:install
 ```
-This will create an initializer and after that you'll be asked next questions:
-* ```User model (leave blank for 'User'):``` – it's a *customer* model in your main application. If you type nothing, than 'User' will be set as *customer* model.
-* ```Checkout steps (leave blank for confirmation only):``` – presence and order of checkout steps that will be shown to customer during checkout. If you type nothing, you'll got only ```:confirm``` and ```:complete```. **Note:** you don't need to specify these two steps, they will automatically be added anyway.
-* ```Cart path (leave blank for '/cart'):``` – path in main application, where shopping cart will be available. If you type nothing, '/cart' path will be set by default. This action will add routes to your 'routes.rb' file.
-* ```Do you want to run ShoppingCart migrations now?``` – if 'yes' or 'y', all just copied migration files will be executed. If you prefere to run them later, you can run ```$ bin/rails db:migrate SCOPE=shopping_cart``` any time.
 
-### Example
-```bash
-→ rails g shopping_cart:install
-Running via Spring preloader in process 13433
-      create  config/initializers/shopping_cart.rb
-User model (leave blank for 'User'): customer
-      append  config/initializers/shopping_cart.rb
-Checkout steps (leave blank for defaults): address delivery payment
-      append  config/initializers/shopping_cart.rb
-Cart path (leave blank for '/cart'): /shopping_cart
-      insert  config/routes.rb
-        rake  shopping_cart:install:migrations
-Copied migration 20160915181819_create_shopping_cart_addresses.shopping_cart.rb from shopping_cart
-Copied migration 20160915181820_create_shopping_cart_coupons.shopping_cart.rb from shopping_cart
-Copied migration 20160915181821_create_shopping_cart_credit_cards.shopping_cart.rb from shopping_cart
-Copied migration 20160915181822_create_shopping_cart_deliveries.shopping_cart.rb from shopping_cart
-Copied migration 20160915181823_create_shopping_cart_order_items.shopping_cart.rb from shopping_cart
-Copied migration 20160915181824_create_shopping_cart_orders.shopping_cart.rb from shopping_cart
-Do you want to run ShoppingCart migrations now? yes
-        rake  db:migrate SCOPE=shopping_cart
-== 20160916085535 CreateShoppingCartAddresses: migrating ======================
--- create_table(:shopping_cart_addresses)
-   -> 0.0156s
-== 20160916085535 CreateShoppingCartAddresses: migrated (0.0157s) =============
+This will do all the necessary actions for you. At runtime, you will be asked the following questions:
 
-== 20160916085536 CreateShoppingCartCoupons: migrating ========================
--- create_table(:shopping_cart_coupons)
-   -> 0.0135s
-== 20160916085536 CreateShoppingCartCoupons: migrated (0.0136s) ===============
+ 1. ```User model (leave blank for 'User'):``` – It's a *Customer* model in your main application. **Note:** If you type nothing, plugin will try to interact 'User'-model.
 
-== 20160916085537 CreateShoppingCartCreditCards: migrating ====================
--- create_table(:shopping_cart_credit_cards)
-   -> 0.0147s
-== 20160916085537 CreateShoppingCartCreditCards: migrated (0.0148s) ===========
+ 2. ```Checkout steps (leave blank for confirmation only):``` – Presence and order of checkout steps. Specify your own or listed above. **Note:** If you type nothing, you'll got only ```:confirm``` and ```:complete``` steps, which will be created automatically anyway.
 
-== 20160916085538 CreateShoppingCartDeliveries: migrating =====================
--- create_table(:shopping_cart_deliveries)
-   -> 0.0099s
-== 20160916085538 CreateShoppingCartDeliveries: migrated (0.0102s) ============
+ 3. ```Cart path (leave blank for '/cart'):``` – Route in main application, where shopping cart will be available. **Note:** If you type nothing shopping cart will be available on '/cart' path.
 
-== 20160916085539 CreateShoppingCartOrderItems: migrating =====================
--- create_table(:shopping_cart_order_items)
-   -> 0.0213s
-== 20160916085539 CreateShoppingCartOrderItems: migrated (0.0216s) ============
+ 4. ```Do you want to run ShoppingCart migrations now?```– Runs all just copied plugin migrations. **Note:** If you prefere to do this later, you can run ```$ bin/rails db:migrate SCOPE=shopping_cart``` any time.
 
-== 20160916085540 CreateShoppingCartOrders: migrating =========================
--- enable_extension("uuid-ossp")
-   -> 0.0557s
--- create_table(:shopping_cart_orders)
-   -> 0.0303s
-== 20160916085540 CreateShoppingCartOrders: migrated (0.0862s) ================
-```
+### Filling the database
 
-## Requirements for the main application models
-* **User model** –  must be configurated with [devise](https://github.com/plataformatec/devise). Only logged in users can create orders.
-* **Product models** – must have `title` and `price` colums in database. You may use as many product types as you want.
+You can add any data as usual in console. However plugin provides some useful generators to save your time.
 
-## Add data to database
-You can add any data as usual from rails console. However plugin provides some helpful generators to save your time.
+**Delivery types**
 
-### Delivery types
-It allows you to add new delivery type just running:
 ```bash
 $ rails g shopping_cart:add_delivery 'Funny express' 5
 ```
-In this example a new delivery type will be added to database with title *Funny express*, which costs $5.00
 
-### Coupon codes
-It allows you to add new coupon code just running:
+In this example a new delivery type will be added to database with title *Funny express* and price $5.00
+
+**Coupon codes**
+
 ```bash
 $ rails g shopping_cart:add_coupon 'i want discount' 20
 ```
+
 In this example a new coupon will be added to database with code *i want discount*, which gives 20% discount.
 
-## Using in views
-### 'Add to cart' form on your product page
-Now, when you finished all configurations, you can add a form to your product page. In this case we have a `Product` class and @product variable.
+### Integration into the templates
+
+**"Add to cart" form on product page**
+
+Just create a usual form tag with `shopping_cart.orders_path` and `method: :post`. You must send the following:
+
+ - `:quantity` of product
+ - `:productable_id` – an id of your product
+ - `:predictable_type` – your product's *Class* name
+
+Here is an example:
+
 ```
 <%= form_tag shopping_cart.orders_path, method: :post do %>
   <%= number_field_tag :quantity, 1, min: '1' %>
@@ -131,9 +137,200 @@ Now, when you finished all configurations, you can add a form to your product pa
 <% end %>
 ```
 
-### Useful links
-* For creating a cart button you can use helper: `shopping_cart.root_path`
-* If you want to give customer direct link to checkout, you can use helper: `shopping_cart.checkout_index_path`. If user have no order 'in progress', he will be redirected to empty cart.
+**"Cart" button**
+
+Path for your link: `shopping_cart.root_path`
+
+**"Checkout" button**
+
+Path for your link: `shopping_cart.checkout_index_path`. If user have no order with state `:in_progress`, he will be redirected to empty cart.
+
+---
+
+## Creating custom steps
+
+Under the hood `ShoppingCart` manipulates [Rectify's](https://github.com/andypike/rectify) *Commands* and *Query Objects* inside [Wicked](https://github.com/schneems/wicked)-based controller structure. It means that you do not need to create new controller for your step. Here is what you have to do:
+
+ 1. [Define your step](#define-your-step)
+ 2. [Create model and configure associations](#create-model-and-configure-associations)
+ 3. [Prepare data for templates](#prepare-data-for-templates) (optional)
+ 4. [Create templates](#create-templates)
+ 5. [Create a handler](#create-a-handler)
+
+Lets imagine that we have different packing options in our store. So our custom step will be called `:packing`.
+
+> **Note:** there are conventions about step name all over the plugin, so be careful with giving names to models, templates and so on...
+
+### Define your step
+
+There are two ways to do it:
+
+ - Specify step name during the `shopping_cart:install` runtime ([see above](#basic-setup))
+ - Manualy configure `ShoppingCart.checkout_steps` array in `config/initializers/shopping_cart.rb` file.
+
+> **Note:** you'll need to restart application after changing initializer.
+
+### Create model and configure associations
+
+**Create your model**
+
+According to our example with *packing options*, we need a model with *title* and *price*. Let's do it.
+
+    rails g model Packing title price:float
+
+> **Note:**
+> ShoppingCart is smart enough. It will try to find a `price` in your model. And if it succeeds, then that value **will be added to the order total.** Therefore, if you do not want this, come up with another name. On the other hand, if the price should be further processed, create a `price` method, which will return the desired value.
+
+**Add relation to Order model**
+
+You've got an awesome generator for this task. Just run
+
+    rails g shopping_cart:add_order_relation belongs_to packing
+
+and that will add `belongs_to` association to `ShoppingCart::Order`, create appropriate migrations and run them.  If you need another relation type feel free to specify it here.
+
+### Prepare data for templates
+
+**Create a query object**
+
+`ShoppingCart` uses [Rectify's Query Objects](https://github.com/andypike/rectify#query-objects) to prepare data for checkout steps. It will try to create new `StepNameForCheckout` and `:call` it automatically. The answer will be saved to `@checkout_data` variable, which will be available in templates.
+
+> **Note:** If query object does not exist you'll get `false` inside `@checkout_data`. So if you don't need anything for your custom step, just do nothing.
+
+According to our example we need to create a `PackingForCheckout` class:
+
+```ruby
+module ShoppingCart
+  class PackingForCheckout < Rectify::Query
+    def query
+      Packing.all
+    end
+  end
+end
+```
+
+**Additional arguments**
+
+This query object will be created with current `@order` as an argument. So you can define initializer and catch it if you need.
+
+**File location**
+
+You can place this file anywhere in you 'app' folder, inside of `shopping_cart` namespace. However recommended path is: `app/queries/shopping_cart/packing_for_checkout.rb`.
+
+### Create templates
+
+You'll need templates for two 'spots':
+
+ - Step page
+ - Confirmation/Completed pages.
+
+> **Note:** In examples below we'll use [Bootstrap](http://getbootstrap.com) and [Haml](http://haml.info).
+
+**Step page**
+
+It's important to remember that at that point you are inside a form for current order. And default plugin's templates build with [Bootstrap](http://getbootstrap.com). So two things are required:
+
+ 1. Place all your code inside
+`= render 'shopping_cart/checkout/checkout_form' do |f|`
+ 2. Width of this template must be 8 bootstrap columns (because of 'order summary' sidebar nearby).
+
+Also you have access to:
+
+ - `@order` with current order
+ - `@checkout_data` with the result of [calling query object](#prepare-data-for-views)
+ - form helper `f`
+
+In our example we are gonna to list all available packing options. Also we want to mark an option, which is already associated with current order.
+
+```ruby
+= render 'shopping_cart/checkout/checkout_form' do |f|
+  .col-md-8
+    .well
+      %h3 Packing options
+      %ul.list-group
+        - @checkout_data.all.each_with_index do |packing, i|
+          %li.fields.form-group.list-group-item
+            = f.radio_button :packing_id, packing.id,
+                checked: (packing.title == @order.try(:packing).try(:title))
+            = f.label :packing_id,
+                "#{packing.title} +#{number_to_currency packing.price}"
+```
+
+This file must be named by step name and placed into `shopping_cart` namespace. In our case the path will be:
+`app/views/shopping_cart/checkout/packing.html.haml`.
+
+**Confirmation & Completed pages**
+
+Both `:confirm` and `:complete` steps contain information the user has previously selected. So, you need to specify how your information should appear.  It will be the same for both pages.
+
+It's required to place all code here inside `div` with id named by your step. You can use a helper method `edit_step_link` with name of your step as an argument if you want to allow user go back to your step. And of course, `@order` variable is available here.
+
+Here goes our example:
+
+```ruby
+#packing_block
+  %h4
+    Packing opitons
+    %small= edit_step_link :packing
+  %p
+    = @order.packing.title
+    = number_to_currency @order.packing.price
+```
+
+The name of this file has the same requirements as in previous case, except that it must have a `_confirmation_` prefix. So in our case it will be:
+`app/views/shopping_cart/checkout/_confirmation_packing.html.haml`.
+
+**Completely custom templates**
+
+As you can see in example above, you are using the existing plugin templates. They are incredibly beautiful, but can not quite perfect balance with the design of your application. If you want to replace them, just create a new templates and save them in the main application according to the structure below.
+
+```
+└─ views
+    ├─ shopping_cart
+    │   └─ checkout
+    │       ├─ packing.html.haml
+    │       ├─ payment.html.haml
+    │       ├─ confirm.html.haml
+    │       ├─ complete.html.haml
+    │       └─ ...
+    └─ layouts
+       └─ shopping_cart
+           ├─ checkout.html.haml
+           └─ ...
+```
+
+Keep in mind that for each checkout step you need a template with the exact same name.
+
+### Create a handler
+Each step's brains are encapsulated in a separate [Rectify's Command](https://github.com/andypike/rectify#commands). `ShoppingCart` will try to send a `:call` to a command named `StepNameCheckoutStep` with `@order` and `params` as an arguments.
+
+So, let's define our command:
+
+```ruby
+module ShoppingCart
+  class PackingCheckoutStep < Rectify::Command
+    def initialize(order, params)
+      @order = order
+      @params = params
+    end
+
+    def call
+      @order.update_attributes packing_params
+    end
+
+    private
+
+    def packing_params
+      @params.require(:order).permit(:packing_id)
+    end
+  end
+end
+```
+Feel free to add any additional logic and validations here.
+
+You can place this file anywhere in you 'app' folder, inside of `shopping_cart` namespace. However recommended path is: `app/commands/shopping_cart/packing_checkout_step.rb`.
+
+---
 
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).

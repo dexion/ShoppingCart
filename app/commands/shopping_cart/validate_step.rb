@@ -25,11 +25,11 @@ module ShoppingCart
 
     def order_has_data_for? step
       case step
-      when :address  then has_address?  ? true : false
-      when :delivery then has_delivery? ? true : false
-      when :payment  then has_payment?  ? true : false
-      when :confirm  then confirmed?    ? true : false
-      else false
+        when :address  then has_address?  ? true : false
+        when :delivery then has_delivery? ? true : false
+        when :payment  then has_payment?  ? true : false
+        when :confirm  then confirmed?    ? true : false
+        else custom_validation(step)      ? true : false
       end
     end
 
@@ -47,6 +47,10 @@ module ShoppingCart
 
     def confirmed?
       @order.processing?
+    end
+
+    def custom_validation step
+      @order.try(step).try(:valid?)
     end
   end
 end

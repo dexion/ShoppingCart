@@ -1,0 +1,5 @@
+#delivery_block
+  %h4
+    = t('checkout.delivery')
+    %small= edit_step_link :delivery
+  = order.delivery.decorate.full_info_list

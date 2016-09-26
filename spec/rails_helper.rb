@@ -47,11 +47,13 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
 
   config.infer_base_class_for_anonymous_controllers = false
   config.order = "random"
 
+  # Clean database
+  require 'database_cleaner'
+  config.use_transactional_fixtures = false
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
     DatabaseCleaner.strategy = :transaction

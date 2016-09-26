@@ -2,6 +2,8 @@ require 'aasm'
 
 module ShoppingCart
   class Order < ApplicationRecord
+    include CustomMethods
+
     has_many   :order_items, dependent: :destroy
     belongs_to :user, class_name: ShoppingCart.user_class
     belongs_to :credit_card, optional: true
@@ -52,11 +54,20 @@ module ShoppingCart
       return if errors.any?
       new_total = order_items.map(&:item_total).sum
       new_total -= (new_total * coupon.discount / 100) if coupon
+      custom_steps.each do |step|
+        new_total += self.try(step).try(:price) || 0
+      end
       self.total = new_total
     end
 
     def destroy_if_orphant
       self.destroy if order_items.count.zero?
+    end
+
+    private
+
+    def custom_steps
+      ShoppingCart.checkout_steps - [:address, :delivery, :payment, :confirm, :complete]
     end
   end
 end

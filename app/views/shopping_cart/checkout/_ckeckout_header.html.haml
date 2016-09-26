@@ -4,6 +4,6 @@
     %nav.navbar.navbar-inverse
       .container-fluid
         %ul.nav.navbar-nav
-          - wizard_steps.each do |item|
+          - ShoppingCart.checkout_steps.each do |item|
             %p.navbar-text{ id: ('active_checkout_step' if item == step) }
               = item.to_s.humanize

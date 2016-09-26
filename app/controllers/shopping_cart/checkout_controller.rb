@@ -9,11 +9,10 @@ module ShoppingCart
     before_action :set_order
 
     def show
-      @step = step
-      @deliveries = Delivery.all.decorate
+      @checkout_data = GetCheckoutData.call(@order, step)
       ValidateStep.call(@step, @order) do
         on(:ok)       { render_wizard }
-        on(:invalid)  { redirect_to root_path }
+        on(:invalid)  { redirect_to previous_wizard_path }
       end
     end
 

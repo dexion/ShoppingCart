@@ -57,6 +57,7 @@ module ShoppingCart
 
         describe 'Payment step' do
           before do
+            choose('order[delivery_id]', match: :first)
             click_button I18n.t('checkout.continue')
           end
 

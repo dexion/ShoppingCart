@@ -1,17 +1,5 @@
-= render partial: 'ckeckout_header', locals: { step: @step }
-%main.raw
-  = render partial: 'errors_messages', locals: { order: @order }
-  = form_for @order, url: wizard_path do |f|
-    .raw
-      .col-md-4
-        = render partial: 'address_fields',
-          locals: { f: f, type: :billing, order: @order, user: @order.user }
-      .col-md-4
-        = render partial: 'address_fields',
-          locals: { f: f, type: :shipping, order: @order, user: @order.user }
-      .col-md-4
-        = render partial: 'order_summary',
-          locals: { order: @order }
-    .raw
-      .col-md-12.text-left
-        = render partial: 'bottom_buttons', locals: { f: f }
+= render 'shopping_cart/checkout/checkout_form' do |f|
+  - [:billing, :shipping].each do |type|
+    .col-md-4
+      = render partial: 'address_fields',
+        locals: { f: f, type: type, order: @order, user: @order.user }

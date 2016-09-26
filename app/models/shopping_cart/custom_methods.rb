@@ -1,0 +1,2 @@
+module ShoppingCart::CustomMethods
+end

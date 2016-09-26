@@ -1,0 +1,18 @@
+Description:
+    Reopens ShoppingCart::Order class and adds given relation
+
+Example:
+    rails generate shopping_cart:add_order_relation belongs_to user
+
+    This will create:
+    create  app/models/shopping_cart/order.rb
+    insert  app/models/shopping_cart/order.rb
+  generate  migration add_packing_reference_to_shopping_cart_orders packing:references
+  Running via Spring preloader in process 44336
+    invoke  active_record
+    create    db/migrate/20160918125841_add_packing_reference_to_shopping_cart_orders.rb
+      rake  db:migrate
+  == 20160918125841 AddPackingReferenceToShoppingCartOrders: migrating ==========
+  -- add_reference(:shopping_cart_orders, :packing, {:foreign_key=>true})
+  -> 0.0167s
+  == 20160918125841 AddPackingReferenceToShoppingCartOrders: migrated (0.0168s) =

@@ -14,9 +14,17 @@ module ShoppingCart
           when :delivery then AddCheckoutDelivery.call(@order, @params)
           when :payment  then AddCheckoutPayment.call(@order, @params)
           when :confirm  then PlaceOrder.call(@order)
+          else call_custom_command
         end
       end
       @order.errors.any? ? broadcast(:validation) : broadcast(:ok)
+    end
+
+    private
+
+    def call_custom_command
+      custom_command = "ShoppingCart::#{@step.to_s.camelcase}CheckoutStep"
+      custom_command.constantize.call(@order, @params)
     end
   end
 end

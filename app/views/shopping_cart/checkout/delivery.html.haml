@@ -1,13 +1,11 @@
-= render partial: 'ckeckout_header', locals: { step: @step }
-%main.raw{id: "#{@step}_step"}
-  = render partial: 'errors_messages', locals: { order: @order }
-  = form_for @order, url: wizard_path do |f|
-    .raw
-      .col-md-8
-        = render partial: 'deliveries', locals: { f: f, deliveries: @deliveries }
-      .col-md-4
-        = render partial: 'order_summary',
-                 locals: { step: @step, order: @order }
-    .raw
-      .col-md-12.text-left
-        = render partial: 'bottom_buttons', locals: { f: f }
+= render 'shopping_cart/checkout/checkout_form' do |f|
+  .col-md-8
+    .well
+      %h3= t('checkout.deliveries')
+      %ul.list-group
+        - @checkout_data.each_with_index do |delivery, i|
+          %li.fields.form-group.list-group-item
+            = f.radio_button :delivery_id, delivery.id,
+                checked: (delivery.title == @order.try(:delivery).try(:title)),
+                data: {price: delivery.price}
+            = f.label :delivery_id, delivery.full_info

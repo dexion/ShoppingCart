@@ -48,5 +48,13 @@ module ShoppingCart
         on(:invalid)  { return false }
       end
     end
+
+    def confirm_step_col_size
+      12/(ShoppingCart.checkout_steps.count - 2)
+    end
+
+    def edit_step_link type
+      edit_link_to(type) if step == :confirm
+    end
   end
 end
