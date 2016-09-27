@@ -1,3 +1,4 @@
+require_relative 'shopping_cart/configuration'
 require "shopping_cart/engine"
 require 'haml'
 require 'rectify'
@@ -16,4 +17,13 @@ require 'jquery-rails'
 module ShoppingCart
   mattr_accessor :user_class
   mattr_accessor :checkout_steps
+
+  class << self
+    attr_accessor :config
+  end
+
+  def self.configure
+    self.config ||= Configuration.new
+    yield(config)
+  end
 end

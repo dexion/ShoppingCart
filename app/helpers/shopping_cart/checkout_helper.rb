@@ -50,7 +50,7 @@ module ShoppingCart
     end
 
     def confirm_step_col_size
-      12/(ShoppingCart.checkout_steps.count - 2)
+      12/(ShoppingCart.config.checkout_steps.count - 2)
     end
 
     def edit_step_link type

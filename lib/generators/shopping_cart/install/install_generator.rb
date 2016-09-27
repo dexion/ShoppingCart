@@ -1,5 +1,6 @@
 module ShoppingCart
   class InstallGenerator < Rails::Generators::Base
+    source_root File.expand_path('../templates', __FILE__)
 
     def add_dependency
       inject_into_file 'config/application.rb', after: "require 'rails/all'" do
@@ -8,23 +9,29 @@ module ShoppingCart
     end
 
     def create_initializer
-      create_file(initializer) unless File.exist?(initializer)
+      unless File.exist? initializer
+        copy_file 'shopping_cart.rb', initializer
+      end
     end
 
     def set_user_class
-      unless File.readlines(initializer).grep(/ShoppingCart.user_class/).any?
+      unless File.readlines(initializer).grep(/config.user_class/).any?
         class_name = ask("User model (leave blank for 'User'):")
         class_name = 'User' if class_name.blank?
-        append_to_file initializer, "ShoppingCart.user_class = '#{class_name.capitalize}'\n"
+        inject_into_file initializer, after: "# Define 'Customer' class" do
+          "\n  config.user_class = '#{class_name.capitalize}'"
+        end
       end
     end
 
     def set_checkout_steps
-      unless File.readlines(initializer).grep(/ShoppingCart.checkout_steps/).any?
+      unless File.readlines(initializer).grep(/config.checkout_steps/).any?
         steps = ask(steps_question)
                 .split(/\W+/).map(&:downcase).map(&:to_sym)
                 .concat [:confirm, :complete]
-        append_to_file initializer, "ShoppingCart.checkout_steps = #{steps}\n"
+        inject_into_file initializer, after: '#Define checkout steps' do
+          "\n  config.checkout_steps = #{steps}"
+        end
       end
     end
 
@@ -33,7 +40,7 @@ module ShoppingCart
         cart_path = ask "Cart path (leave blank for '/cart'):"
         cart_path = '/cart' if cart_path.blank?
         inject_into_file router, after: "Rails.application.routes.draw do" do
-          "\nmount ShoppingCart::Engine, at: '#{cart_path}'"
+          "\n  mount ShoppingCart::Engine, at: '#{cart_path}'"
         end
       end
     end

@@ -163,7 +163,7 @@ Lets imagine that we have different packing options in our store. So our custom 
 There are two ways to do it:
 
  - Specify step name during the `shopping_cart:install` runtime ([see above](#basic-setup))
- - Manualy configure `ShoppingCart.checkout_steps` array in `config/initializers/shopping_cart.rb` file.
+ - Type custom step name in `config/initializers/shopping_cart.rb` file, in `config.checkout_steps`.
 
 > **Note:** you'll need to restart application after changing initializer.
 
@@ -296,7 +296,7 @@ As you can see in example above, you are using the existing plugin templates. Th
            └─ ...
 ```
 
-Keep in mind that for each checkout step you need a template with the exact same name.
+> **Note:** Keep in mind that for each checkout step you need a template with the exact same name.
 
 ### Create a handler
 Each step's brains are encapsulated in a separate [Rectify's Command](https://github.com/andypike/rectify#commands). `ShoppingCart` will try to send a `:call` to a command named `StepNameCheckoutStep` with `@order` and `params` as an arguments.
