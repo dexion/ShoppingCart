@@ -1,6 +1,12 @@
 module ShoppingCart
   class InstallGenerator < Rails::Generators::Base
 
+    def add_dependency
+      inject_into_file 'config/application.rb', after: "require 'rails/all'" do
+        "\nrequire 'shopping_cart'"
+      end
+    end
+
     def create_initializer
       create_file(initializer) unless File.exist?(initializer)
     end
@@ -26,8 +32,8 @@ module ShoppingCart
       unless File.readlines(router).grep(/ShoppingCart::Engine/).any?
         cart_path = ask "Cart path (leave blank for '/cart'):"
         cart_path = '/cart' if cart_path.blank?
-        inject_into_file router, before: "root" do
-          "mount ShoppingCart::Engine, at: '#{cart_path}'\n  "
+        inject_into_file router, after: "Rails.application.routes.draw do" do
+          "\nmount ShoppingCart::Engine, at: '#{cart_path}'"
         end
       end
     end
