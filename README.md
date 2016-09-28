@@ -1,4 +1,8 @@
-# ShoppingCart [![Code Climate](https://codeclimate.com/github/kirill-oleynik/ShoppingCart/badges/gpa.svg)](https://codeclimate.com/github/kirill-oleynik/ShoppingCart) [![Build Status](https://travis-ci.org/kirill-oleynik/ShoppingCart.svg?branch=development)](https://travis-ci.org/kirill-oleynik/ShoppingCart) [![Gem Version](https://badge.fury.io/rb/shopping-cart.svg)](https://badge.fury.io/rb/shopping-cart)
+# ShoppingCart
+
+[![Code Climate](https://codeclimate.com/github/kirill-oleynik/ShoppingCart/badges/gpa.svg)](https://codeclimate.com/github/kirill-oleynik/ShoppingCart)
+[![Build Status](https://travis-ci.org/kirill-oleynik/ShoppingCart.svg?branch=development)](https://travis-ci.org/kirill-oleynik/ShoppingCart)
+[![Gem Version](https://badge.fury.io/rb/shopping-cart.svg)](https://badge.fury.io/rb/shopping-cart)
 
 ShoppingCart plugin provides checkout functionality, which can be integrated into your online store and configured according to your business logic.
 

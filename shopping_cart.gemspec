@@ -7,12 +7,14 @@ require "shopping_cart/version"
 Gem::Specification.new do |s|
   s.name        = "shopping-cart"
   s.version     = ShoppingCart::VERSION
-  s.authors     = ["Kirill Oleynik"]
+  s.author      = "Kirill Ωleynik"
   s.email       = ["kirill.olejnik@gmail.com"]
   s.homepage    = "https://github.com/kirill-oleynik/ShoppingCart"
   s.summary     = "Shopping cart & checkout functionality"
   s.description = "ShoppingCart plugin provides checkout functionality, which can be integrated into your online store and configured according to your business logic."
   s.license     = "MIT"
+
+  s.required_ruby_version = '>= 2.3.1'
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
