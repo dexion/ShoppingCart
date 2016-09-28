@@ -32,7 +32,7 @@ module ShoppingCart
     end
 
     def set_steps
-      self.steps = ShoppingCart.checkout_steps
+      self.steps = ShoppingCart.config.checkout_steps
     end
   end
 end

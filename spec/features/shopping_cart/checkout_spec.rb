@@ -5,6 +5,10 @@ module ShoppingCart
     before do
       login_as user, scope: :user
       visit shopping_cart.root_path
+      ShoppingCart.configure do |config|
+        config.user_class = 'Customer'
+        config.checkout_steps = [:address, :delivery, :payment, :confirm, :complete]
+      end
       click_link I18n.t('cart.checkout')
     end
 

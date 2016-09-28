@@ -7,12 +7,14 @@ require "shopping_cart/version"
 Gem::Specification.new do |s|
   s.name        = "shopping-cart"
   s.version     = ShoppingCart::VERSION
-  s.authors     = ["Kirill Oleynik"]
+  s.author      = "Kirill Ωleynik"
   s.email       = ["kirill.olejnik@gmail.com"]
   s.homepage    = "https://github.com/kirill-oleynik/ShoppingCart"
   s.summary     = "Shopping cart & checkout functionality"
   s.description = "ShoppingCart plugin provides checkout functionality, which can be integrated into your online store and configured according to your business logic."
   s.license     = "MIT"
+
+  s.required_ruby_version = '>= 2.3.1'
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
@@ -37,6 +39,8 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'rspec-rails', '~> 3.5', '>= 3.5.2'
   s.add_development_dependency 'capybara', '~> 2.9', '>= 2.9.1'
+  s.add_development_dependency 'capybara-screenshot', '~> 1.0', '>= 1.0.14'
   s.add_development_dependency 'factory_girl_rails', '~> 4.7'
   s.add_development_dependency 'shoulda-matchers', '~> 3.1', '>= 3.1.1'
+  s.add_development_dependency 'codeclimate-test-reporter'
 end

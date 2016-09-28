@@ -5,7 +5,7 @@ module ShoppingCart
     include CustomMethods
 
     has_many   :order_items, dependent: :destroy
-    belongs_to :user, class_name: ShoppingCart.user_class
+    belongs_to :user, class_name: ShoppingCart.config.user_class
     belongs_to :credit_card, optional: true
     belongs_to :delivery, optional: true
     has_one :coupon, dependent: :destroy
@@ -67,7 +67,7 @@ module ShoppingCart
     private
 
     def custom_steps
-      ShoppingCart.checkout_steps - [:address, :delivery, :payment, :confirm, :complete]
+      ShoppingCart.config.checkout_steps - [:address, :delivery, :payment, :confirm, :complete]
     end
   end
 end

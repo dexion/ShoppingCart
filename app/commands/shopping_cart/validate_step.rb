@@ -19,7 +19,7 @@ module ShoppingCart
     end
 
     def steps_to_validate
-      steps = ShoppingCart.checkout_steps
+      steps = ShoppingCart.config.checkout_steps
       steps[0...steps.index(@step)]
     end
 

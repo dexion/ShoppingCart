@@ -1,3 +1,5 @@
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
@@ -14,6 +16,7 @@ require 'rails-controller-testing'
 require 'shoulda-matchers'
 require 'aasm/rspec'
 require 'capybara/rspec'
+require 'capybara-screenshot/rspec'
 
 Rails.backtrace_cleaner.remove_silencers!
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -96,3 +99,6 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+# Keep only the screenshots generated from the last failing test suite
+Capybara::Screenshot.prune_strategy = :keep_last_run
