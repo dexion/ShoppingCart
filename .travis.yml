@@ -3,3 +3,6 @@ rvm:
  - 2.3.1
 services:
   - postgresql
+addons:
+  code_climate:
+    repo_token: 7deb964f60d5e69c5fe4717063c6df0d8e07c12eeb4cd2ba120be5c70bc8926e

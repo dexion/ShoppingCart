@@ -40,4 +40,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'capybara-screenshot', '~> 1.0', '>= 1.0.14'
   s.add_development_dependency 'factory_girl_rails', '~> 4.7'
   s.add_development_dependency 'shoulda-matchers', '~> 3.1', '>= 3.1.1'
+  s.add_development_dependency 'codeclimate-test-reporter'
 end
